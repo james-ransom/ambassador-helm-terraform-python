@@ -1,0 +1,14 @@
+apiVersion: getambassador.io/v2
+kind:  Mapping
+metadata:
+  name: mapping-groupings
+  labels:
+    backendhost: backend-k8s 
+spec:
+  prefix: /groupings/
+  rewrite: /groupings/
+  service: backend-k8s:80
+  labels:
+    ambassador:
+      - request_label:
+        - backend-k8s

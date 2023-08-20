@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-k8s
+spec:
+  replicas: 1 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: backend-k8s
+  template:
+    metadata:
+      labels:
+        app: backend-k8s
+    spec:
+      containers:
+        - name: python-k8s
+          image: us-east1-docker.pkg.dev/kube-testing-252213/gcp-lab/ambassador-helm-tf:1.0
+          imagePullPolicy: Always
+          env:
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+              httpHeaders:
+                - name: X-Health
+                  value: "1"
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+              httpHeaders:
+                - name: X-Health
+                  value: "1"
+            initialDelaySeconds: 120
+            periodSeconds: 20

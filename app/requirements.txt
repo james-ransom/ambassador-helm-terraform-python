@@ -1,0 +1,12 @@
+Flask
+pandas
+numpy
+gensim
+annoy
+requests
+spacy
+uWSGI
+click<8.1
+elasticsearch[async]>=7.8.0,<8.0.0
+inflect
+emoji

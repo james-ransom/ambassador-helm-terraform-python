@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ambassador
+  annotations:
+    cloud.google.com/load-balancer-type: Internal
+  namespace: ambassador 
+  labels:
+    app: ambassador
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
+   - port: 80
+     targetPort: 8080
+  selector:
+    service: ambassador

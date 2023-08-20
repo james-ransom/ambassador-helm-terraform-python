@@ -1,0 +1,13 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: minimal-host
+spec:
+  hostname: "*" 
+  mappingSelector:
+    matchLabels:
+      backendhost: backend-k8s 
+  requestPolicy:
+    insecure:
+      action: Route 
+      additionalPort: 80

@@ -1,0 +1,14 @@
+apiVersion: getambassador.io/v2
+kind:  Mapping
+metadata:
+  name: mapping-search
+  labels:
+    backendhost: backend-k8s
+spec:
+  prefix: /search/
+  rewrite: /search/
+  service: backend-k8s-v2:80
+  labels:
+    ambassador:
+      - request_label:
+        - backend-k8-v2
