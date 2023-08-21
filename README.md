@@ -21,6 +21,17 @@ cat secret.json
 }
 ```
 
+## Setup the project in vars.tf
+
+```
+variable "project" {
+ type = string
+ default = "[YOUR_PROJECTNAME_HERE]"
+}
+
+```
+
+
 ## Setup terraform 
 
 ```
