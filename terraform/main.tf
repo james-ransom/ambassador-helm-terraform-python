@@ -1,6 +1,6 @@
 provider "google" {
   project     = var.project
-  credentials = file("../../secret.json")
+  credentials = file("../secret.json")
 }
 
 resource "google_container_cluster" "primary" {
