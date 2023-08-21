@@ -1,4 +1,4 @@
 variable "project" {
  type = string
- default = "kube-testing-252213"
+ default = "[YOUR_PROJECTNAME_HERE]"
 }
