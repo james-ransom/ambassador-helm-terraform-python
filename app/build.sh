@@ -10,22 +10,24 @@ if [ ! -f $1 ]; then
 fi
 
 # Log INTO GCP 
-docker login -u _json_key -p "$(cat $1)" https://us-east1-docker.pkg.dev 
+docker login -u _json_key -p "$(cat $1)" https://us-central1-c-docker.pkg.dev 
 gcloud auth configure-docker
-docker buildx build --platform=linux/amd64  --tag us-east1-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0 .
-docker tag us-east1-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0 us-east1-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:latest
-docker push us-east1-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0
-docker push us-east1-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:latest
+docker buildx build --platform=linux/amd64  --tag us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0 .
+ex
+
+
+docker tag us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0 us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:latest
+docker push us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0
+docker push us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:latest
 kubectl apply -f deployment.yaml 
 kubectl apply -f deployment-v2.yaml
 kubectl apply -f service.yaml 
 
-
 # Check if the namespace exists
 namespace="ambassador"
-if kubectl get namespace "$namespace" &> /dev/null; then
-   echo "Namespace '$namespace' already exists, skipping helm install."
-else
+#if kubectl get namespace "$namespace" &> /dev/null; then
+#   echo "Namespace '$namespace' already exists, skipping helm install."
+#else
    # INSTALL HELM AND AMBASSADOR 
    helm repo add datawire https://app.getambassador.io
    helm repo update
@@ -34,7 +36,7 @@ else
    kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
    helm install edge-stack --namespace ambassador datawire/edge-stack && \
    kubectl -n ambassador wait --for condition=available --timeout=90s deploy -lproduct=aes
-fi 
+#fi 
 
 kubectl apply -f ambassador-lb.yaml
 kubectl apply -f listen3.yaml 
