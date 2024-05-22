@@ -17,9 +17,7 @@ RUN apt-get update \
 WORKDIR /app
 COPY . /app
 
-RUN pip install -r /app/requirements.txt \
-    && python -m spacy download en_core_web_lg
-
+RUN pip install -r /app/requirements.txt
 RUN useradd nginx
 RUN mv nginx.conf /etc/nginx
 RUN mkdir /etc/uwsgi

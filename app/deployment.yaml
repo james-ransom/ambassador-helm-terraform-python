@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: python-k8s
-          image: us-east1-docker.pkg.dev/kube-testing-252213/gcp-lab/ambassador-helm-tf:1.0
+          image: us-central1-docker.pkg.dev/[YOUR_PROJECTNAME_HERE]/backend/ambassador-helm-tf:1.0
           imagePullPolicy: Always
           env:
           ports:

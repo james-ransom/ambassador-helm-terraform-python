@@ -10,15 +10,17 @@ if [ ! -f $1 ]; then
 fi
 
 # Log INTO GCP 
-docker login -u _json_key -p "$(cat $1)" https://us-central1-c-docker.pkg.dev 
+docker login -u _json_key -p "$(cat $1)" https://us-central1-docker.pkg.dev 
 gcloud auth configure-docker
-docker buildx build --platform=linux/amd64  --tag us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0 .
-ex
+docker buildx build --platform=linux/amd64  --tag us-central1-docker.pkg.dev/$2/backend/ambassador-helm-tf:1.0 .
 
 
-docker tag us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0 us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:latest
-docker push us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:1.0
-docker push us-central1-c-docker.pkg.dev/$2/gcp-lab/ambassador-helm-tf:latest
+docker tag us-central1-docker.pkg.dev/$2/backend/ambassador-helm-tf:1.0 us-central1-docker.pkg.dev/$2/backend/ambassador-helm-tf:latest
+docker push us-central1-docker.pkg.dev/$2/backend/ambassador-helm-tf:1.0
+docker push us-central1-docker.pkg.dev/$2/backend/ambassador-helm-tf:latest
+
+#sed -i '' 's/VERSION/VER-1/g' main.py 
+
 kubectl apply -f deployment.yaml 
 kubectl apply -f deployment-v2.yaml
 kubectl apply -f service.yaml 
