@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: python-k8s
-          image: us-central1-docker.pkg.dev/[YOUR_PROJECTNAME_HERE]/backend/ambassador-helm-tf:1.0
+          image: us-central1-docker.pkg.dev/epic-jenkins/backend/ambassador-helm-tf:1716427956
           imagePullPolicy: Always
           env:
           ports:
@@ -31,8 +31,8 @@ spec:
               httpHeaders:
                 - name: X-Health
                   value: "1"
-            initialDelaySeconds: 120
-            periodSeconds: 10
+            initialDelaySeconds: 1
+            periodSeconds: 1 
           livenessProbe:
             httpGet:
               path: /
@@ -40,5 +40,5 @@ spec:
               httpHeaders:
                 - name: X-Health
                   value: "1"
-            initialDelaySeconds: 120
-            periodSeconds: 20
+            initialDelaySeconds: 1
+            periodSeconds: 1
